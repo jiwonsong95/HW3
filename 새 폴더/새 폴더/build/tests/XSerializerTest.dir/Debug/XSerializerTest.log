@@ -1,0 +1,6 @@
+﻿  Building Custom Rule C:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/tests/CMakeLists.txt
+  XSerializerHandlers.cpp
+  XSerializerTest.cpp
+C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\tests\src\XSerializerTest\XSerializerTest.cpp(204,14): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  코드를 생성하고 있습니다...
+  XSerializerTest.vcxproj -> C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\build\tests\Debug\XSerializerTest.exe

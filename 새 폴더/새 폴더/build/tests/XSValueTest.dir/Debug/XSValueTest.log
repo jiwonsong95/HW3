@@ -1,0 +1,8 @@
+﻿  Building Custom Rule C:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/tests/CMakeLists.txt
+  XSValueTest.cpp
+C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\tests\src\XSValueTest\XSValueTest.cpp(1357,82): warning C4146: 단항 빼기 연산자가 부호 없는 형식에 적용되었습니다. 결과는 역시 unsigned입니다.
+C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\tests\src\XSValueTest\XSValueTest.cpp(1512,84): warning C4146: 단항 빼기 연산자가 부호 없는 형식에 적용되었습니다. 결과는 역시 unsigned입니다.
+C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\tests\src\XSValueTest\XSValueTest.cpp(1660,84): warning C4146: 단항 빼기 연산자가 부호 없는 형식에 적용되었습니다. 결과는 역시 unsigned입니다.
+C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\tests\src\XSValueTest\XSValueTest.cpp(1808,84): warning C4146: 단항 빼기 연산자가 부호 없는 형식에 적용되었습니다. 결과는 역시 unsigned입니다.
+C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\tests\src\XSValueTest\XSValueTest.cpp(1965,78): warning C4146: 단항 빼기 연산자가 부호 없는 형식에 적용되었습니다. 결과는 역시 unsigned입니다.
+  XSValueTest.vcxproj -> C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\build\tests\Debug\XSValueTest.exe

@@ -1,0 +1,7 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.31/Modules/BasicConfigVersion-SameMajorVersion.cmake.in
+C:/Program Files/CMake/share/cmake-3.31/Modules/CMakePackageConfigHelpers.cmake
+C:/Program Files/CMake/share/cmake-3.31/Modules/WriteBasicConfigVersionFile.cmake
+C:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/src/CMakeLists.txt
+C:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/src/XercesCConfig.cmake.in
+C:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/src/xercesc/util/version.rc.cmake.in

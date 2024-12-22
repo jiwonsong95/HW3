@@ -1,0 +1,10 @@
+^C:\USERS\ZLFFJ\DESKTOP\HW3\새 폴더\새 폴더\TESTS\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더" "-BC:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/build" --check-stamp-file "C:/Users/zlffj/Desktop/HW3/새 폴더/새 폴더/build/tests/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

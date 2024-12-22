@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\dtd\blocks.ent">
+      <Filter>style\dtd</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\dtd\characters.ent">
+      <Filter>style\dtd</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\dtd\links.ent">
+      <Filter>style\dtd</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\dtd\markup.ent">
+      <Filter>style\dtd</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\graphics\button-a.gif">
+      <Filter>style\graphics</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\graphics\button-b.gif">
+      <Filter>style\graphics</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\graphics\section.gif">
+      <Filter>style\graphics</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\bottom.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\button-asf-hi.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\button-asf-lo.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\button-w3c-hi.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\button-w3c-lo.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\button-xml-hi.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\button-xml-lo.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\close.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\dot.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\join.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\line.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\logo.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\note.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\right.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\separator-space.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\separator.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\resources\void.gif">
+      <Filter>style\resources</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\any2header.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\any2project.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\book2group.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\book2project.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\changes2document.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\context2footer.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\context2label.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\context2section.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\directory2project.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\document2html.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\faqs2document.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+    <None Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\stylesheets\group2document.xsl">
+      <Filter>style\stylesheets</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <XML Include="C:\Users\zlffj\Desktop\HW3\새 폴더\새 폴더\doc\style\loader.xml">
+      <Filter>style</Filter>
+    </XML>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="style">
+      <UniqueIdentifier>{262826F2-A58C-36E9-9B9C-A83DC3A1C2ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="style\dtd">
+      <UniqueIdentifier>{6366F43E-AE03-39B3-8B01-23FD5CD1618E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="style\graphics">
+      <UniqueIdentifier>{2BA3460B-A005-3E63-A2EB-6754D2ACD49D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="style\resources">
+      <UniqueIdentifier>{0C1DCB9B-F9FE-38EA-BD68-4E8576F6EDC1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="style\stylesheets">
+      <UniqueIdentifier>{FC16965B-B84C-3F5D-9AD8-80202EDF6675}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
