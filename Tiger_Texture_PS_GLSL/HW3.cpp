@@ -494,8 +494,6 @@ void display(void) {
     glUseProgram(0);
 
     //--------------- [2] Lighting Pass ---------------
-    // (필요시) glDisable(GL_DEPTH_TEST);  // 풀스크린 사각형 그릴 때 보통 depth test off
-
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glUseProgram(h_ShaderProgram_DeferredLighting);
@@ -514,7 +512,6 @@ void display(void) {
     glUniform1i(loc_lighting_gAlbedo, 2);
 
     glUniform1i(loc_numLights, LIGHT_CNT);
-
 
     // 저장된 광원 가져오기
     for (int i = 0; i < LIGHT_CNT; i++) {
