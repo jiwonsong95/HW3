@@ -61,7 +61,6 @@ vec4 lighting_equation_textured(in vec3 P_EC, in vec3 N_EC, in vec4 base_color) 
 
             L_EC = normalize(L_EC);
 
-            // --- 스포트라이트 처리 ---
             if (u_light[i].spot_cutoff_angle < 180.0f) {
                 float spot_cutoff_angle = clamp(u_light[i].spot_cutoff_angle, zero_f, 90.0f);
                 vec3 spot_dir = normalize(u_light[i].spot_direction);
@@ -88,9 +87,6 @@ vec4 lighting_equation_textured(in vec3 P_EC, in vec3 N_EC, in vec4 base_color) 
                 // 디퓨즈
                 local_color_sum += u_light[i].diffuse_color * base_color * diff;
 
-                // **스페큘러 계산 수정** ----------------------
-                // Eye coordinate에서의 카메라는 (0,0,0)이므로
-                // 시선 벡터 V_EC = normalize(-P_EC) 
                 vec3 V_EC = normalize(-P_EC);
                 vec3 H_EC = normalize(L_EC + V_EC); 
                 
@@ -109,7 +105,6 @@ vec4 lighting_equation_textured(in vec3 P_EC, in vec3 N_EC, in vec4 base_color) 
 }
 
 void main(void) {
-    // 텍스처를 사용한다고 가정
     vec4 base_color = texture(u_base_texture, v_tex_coord);
     final_color = lighting_equation_textured(v_position_EC, normalize(v_normal_EC), base_color);
 }

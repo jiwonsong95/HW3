@@ -163,10 +163,10 @@
     <ClInclude Include="Shaders\LoadShaders.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DeferredGeometry.frag" />
-    <None Include="DeferredGeometry.vert" />
-    <None Include="DeferredLighting.vert" />
+    <None Include="Shaders\DeferredGeometry.frag" />
+    <None Include="Shaders\DeferredGeometry.vert" />
     <None Include="Shaders\DeferredLighting.frag" />
+    <None Include="Shaders\DeferredLighting.vert" />
     <None Include="Shaders\Phong_Tx.frag" />
     <None Include="Shaders\Phong_Tx.vert" />
   </ItemGroup>

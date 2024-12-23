@@ -40,6 +40,7 @@ void main()
         float dist = length(L);
         L = normalize(L);
 
+        // ?? 이미 스텐실 때문에 한 거 아니였어??
         // --- 2) 광원 볼륨의 반경(radius) 계산 ---
         float Imax = max(lights[i].Color.r, max(lights[i].Color.g, lights[i].Color.b));
 
@@ -69,13 +70,8 @@ void main()
         {
             radius = 999999.0;
         }
-
         // --- 3) 반경 안에 있을 때만 조명 계산 ---
-        float attenuation = 0.0;
-        if (dist < radius)
-        {
-            attenuation = 1.0 / (Kc + Kl * dist + Kq * dist * dist);
-        }
+        float attenuation = 1.0 / (Kc + Kl * dist + Kq * dist * dist);
 
         // --- 4) 조명 계산 ---
         float diff = max(dot(Normal, L), 0.0);

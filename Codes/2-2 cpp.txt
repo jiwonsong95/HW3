@@ -260,8 +260,6 @@ TigerInstance g_tigerTable[32] = {
 
 void draw_tiger_transformed(const TigerInstance& t, float extraRotX_deg = -90.0f) {
     // [1] 텍스처 바인딩 (디퍼드 셰이딩 지오메트리 패스)
-    //     set_material_tiger() 호출 제거
-    //     대신 glActiveTexture + glBindTexture로 원하는 텍스처를 바인딩
     glActiveTexture(GL_TEXTURE0 + t.textureID);
     glBindTexture(GL_TEXTURE_2D, texture_names[t.textureID]);
     glUniform1i(loc_g_geom_base_texture, t.textureID);

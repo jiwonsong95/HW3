@@ -37,16 +37,16 @@
     <None Include="Shaders\Phong_Tx.vert">
       <Filter>리소스 파일</Filter>
     </None>
-    <None Include="DeferredLighting.vert">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="DeferredGeometry.frag">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="DeferredGeometry.vert">
-      <Filter>리소스 파일</Filter>
-    </None>
     <None Include="Shaders\DeferredLighting.frag">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\DeferredLighting.vert">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\DeferredGeometry.frag">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\DeferredGeometry.vert">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>

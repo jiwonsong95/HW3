@@ -48,6 +48,7 @@ GLint loc_g_geom_base_texture;
 // Lighting Pass 셰이더용 uniform location
 GLint loc_lighting_gPosition, loc_lighting_gNormal, loc_lighting_gAlbedo;
 GLint loc_numLights;
+GLint loc_lighting_ModelViewProjectionMatrix;
 
 
 _loc_light loc_lights[128];
@@ -88,6 +89,7 @@ static const glm::vec3 palette[] = {
 
 const int palette_size = sizeof(palette) / sizeof(palette[0]);
 
+
 //================= 모델/VAO 관련 ===================
 
 // (1) 바닥
@@ -101,6 +103,7 @@ GLfloat rectangle_vertices[6][8] = {
     { 1.0f, 1.0f, 0.0f,  0.0f,0.0f, 1.0f,  TEX_COORD_EXTENT,TEX_COORD_EXTENT },
     { 0.0f, 1.0f, 0.0f,  0.0f,0.0f, 1.0f,  0.0f,TEX_COORD_EXTENT }
 };
+
 
 void prepare_floor(void) {
     glGenBuffers(1, &rectangle_VBO);
@@ -260,8 +263,6 @@ TigerInstance g_tigerTable[32] = {
 
 void draw_tiger_transformed(const TigerInstance& t, float extraRotX_deg = -90.0f) {
     // [1] 텍스처 바인딩 (디퍼드 셰이딩 지오메트리 패스)
-    //     set_material_tiger() 호출 제거
-    //     대신 glActiveTexture + glBindTexture로 원하는 텍스처를 바인딩
     glActiveTexture(GL_TEXTURE0 + t.textureID);
     glBindTexture(GL_TEXTURE_2D, texture_names[t.textureID]);
     glUniform1i(loc_g_geom_base_texture, t.textureID);
@@ -292,6 +293,95 @@ void draw_tiger_transformed(const TigerInstance& t, float extraRotX_deg = -90.0f
 
     // [5] 실제 그리기
     draw_tiger();
+}
+
+// (3) 구체 
+GLuint sphere_VBO = 0, sphere_VAO = 0;
+int sphere_n_triangles = 0;
+GLfloat* sphere_vertices = NULL;
+
+void prepare_sphere() {
+    char filename[] = "Data/sphere_vnt.geom";
+
+    int n_bytes_per_vertex = 8 * sizeof(float);
+    int n_bytes_per_triangle = 3 * n_bytes_per_vertex;
+
+    sphere_n_triangles = read_geometry(&sphere_vertices,
+        n_bytes_per_triangle,
+        filename);
+
+    if (sphere_n_triangles < 0) {
+        fprintf(stderr, "Error: cannot load sphere from file %s\n", filename);
+        return;
+    }
+
+    glGenBuffers(1, &sphere_VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, sphere_VBO);
+    glBufferData(GL_ARRAY_BUFFER,
+        sphere_n_triangles * n_bytes_per_triangle,
+        sphere_vertices,
+        GL_STATIC_DRAW);
+
+    free(sphere_vertices);
+    sphere_vertices = NULL;
+
+    glGenVertexArrays(1, &sphere_VAO);
+    glBindVertexArray(sphere_VAO);
+
+    glVertexAttribPointer(LOC_VERTEX, 3, GL_FLOAT, GL_FALSE,
+        n_bytes_per_vertex, (GLvoid*)0);
+    glEnableVertexAttribArray(LOC_VERTEX);
+
+    glVertexAttribPointer(LOC_NORMAL, 3, GL_FLOAT, GL_FALSE,
+        n_bytes_per_vertex, (GLvoid*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(LOC_NORMAL);
+
+    glVertexAttribPointer(LOC_TEXCOORD, 2, GL_FLOAT, GL_FALSE,
+        n_bytes_per_vertex, (GLvoid*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(LOC_TEXCOORD);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    printf("Sphere (%d triangles) is prepared.\n", sphere_n_triangles);
+}
+
+void draw_sphere() {
+    glBindVertexArray(sphere_VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3 * sphere_n_triangles);
+    glBindVertexArray(0);
+}
+
+float compute_light_radius(int i) {
+    float max_color = fmaxf(fmaxf(g_lightColor[i].r, g_lightColor[i].g), g_lightColor[i].b);
+
+    float constant = 1.0f;
+    float linear = 0.15f;
+    float quadratic = 0.0005f;
+
+    float radius = (-linear + sqrtf(linear * linear - 4 * quadratic * (constant - max_color)))
+        / (2 * quadratic);
+
+    if (radius < 0.0f)
+        radius = 1.0f;
+
+    return radius;
+}
+
+void draw_sphere_for_light(int i) {
+    // (1) 위치, 반경 계산
+    glm::vec3 center = glm::vec3(g_worldLightPos[i]);
+    float radius = compute_light_radius(i);
+
+    // (2) 모델 행렬
+    glm::mat4 ModelMatrix = glm::translate(glm::mat4(1.0f), center);
+    ModelMatrix = glm::scale(ModelMatrix, glm::vec3(radius));
+
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    glUniformMatrix4fv(loc_lighting_ModelViewProjectionMatrix, 1, GL_FALSE, &MVP[0][0]);
+
+    // (3) 구체 그리기
+    draw_sphere();
 }
 
 //================= 전체 화면 사각형(라이팅 패스 용) ===================
@@ -431,6 +521,7 @@ void prepare_shader_programs(void) {
     loc_lighting_gAlbedo = glGetUniformLocation(h_ShaderProgram_DeferredLighting, "gAlbedo");
 
     loc_numLights = glGetUniformLocation(h_ShaderProgram_DeferredLighting, "numLights");
+    loc_lighting_ModelViewProjectionMatrix = glGetUniformLocation(h_ShaderProgram_DeferredLighting, "uMVP");
 
     // 광원 uniform location 잡기
     for (int i = 0; i < 128; i++) {
@@ -451,6 +542,9 @@ void prepare_shader_programs(void) {
 
 //================= 디스플레이 함수 (핵심) ===================
 void display(void) {
+    glEnable(GL_CULL_FACE);
+    glDisable(GL_DEPTH_TEST);
+
     // 벤치마크 start
     if (frame_count >= start_frame && frame_count < start_frame + measure_frames) {
         frame_start = std::chrono::high_resolution_clock::now();
@@ -494,45 +588,82 @@ void display(void) {
     glUseProgram(0);
 
     //--------------- [2] Lighting Pass ---------------
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);        // 화면으로 다시 돌려놓기
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    glEnable(GL_STENCIL_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_ONE, GL_ONE);
 
-    glUseProgram(h_ShaderProgram_DeferredLighting);
-
-    // G-Buffer 텍스처 3개 bind
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, gPosition);
-    glUniform1i(loc_lighting_gPosition, 0);
-
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D, gNormal);
-    glUniform1i(loc_lighting_gNormal, 1);
-
-    glActiveTexture(GL_TEXTURE2);
-    glBindTexture(GL_TEXTURE_2D, gAlbedo);
-    glUniform1i(loc_lighting_gAlbedo, 2);
-
-    glUniform1i(loc_numLights, LIGHT_CNT);
-
-    // 저장된 광원 가져오기
     for (int i = 0; i < LIGHT_CNT; i++) {
-        glm::vec4 viewLightPos = ViewMatrix * g_worldLightPos[i];
+        // [A] 스텐실 초기화
+        glStencilMask(0xFF);
+        glClearStencil(0);
+        glClear(GL_STENCIL_BUFFER_BIT);
 
-        glUniform3f(loc_lights[i].position,
-            viewLightPos.x, viewLightPos.y, viewLightPos.z);
+        // [B] 뒷면 → 스텐실 증가
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glDepthMask(GL_FALSE);
+        glCullFace(GL_FRONT);
+        glStencilOpSeparate(GL_BACK, GL_KEEP, GL_INCR_WRAP, GL_KEEP);
+        glStencilFuncSeparate(GL_BACK, GL_ALWAYS, 0, 0xFF);
+        draw_sphere_for_light(i);
 
-        glm::vec3 c = g_lightColor[i];
-        glUniform3f(loc_lights[i].color, c.r, c.g, c.b);
+        // [C] 앞면 → 스텐실 감소
+        glCullFace(GL_BACK);
+        glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_DECR_WRAP, GL_KEEP);
+        glStencilFuncSeparate(GL_FRONT, GL_ALWAYS, 0, 0xFF);
+        draw_sphere_for_light(i);
 
-        glUniform1f(loc_lights[i].linear, 0.15f);
-        glUniform1f(loc_lights[i].quadratic, 0.0005f);
+        // [D] 볼륨 실제 조명 계산
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        glDepthMask(GL_FALSE);
+        glStencilFunc(GL_NOTEQUAL, 0, 0xFF);
+        glStencilMask(0x00);
+
+        // 여기서 사용될 쉐이더 bind
+        glUseProgram(h_ShaderProgram_DeferredLighting);
+
+        // G-buffer 텍스처들 바인딩
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, gPosition);
+        glUniform1i(loc_lighting_gPosition, 0);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, gNormal);
+        glUniform1i(loc_lighting_gNormal, 1);
+
+        glActiveTexture(GL_TEXTURE2);
+        glBindTexture(GL_TEXTURE_2D, gAlbedo);
+        glUniform1i(loc_lighting_gAlbedo, 2);
+
+        glUniform1i(loc_numLights, LIGHT_CNT);
+
+        for (int j = 0; j < LIGHT_CNT; j++) {
+            // position은 vec3 로 가정 (셰이더에서도 vec3)
+            glUniform3f(loc_lights[j].position,
+                g_worldLightPos[j].x,
+                g_worldLightPos[j].y,
+                g_worldLightPos[j].z);
+
+            // color도 vec3
+            glUniform3f(loc_lights[j].color,
+                g_lightColor[j].r,
+                g_lightColor[j].g,
+                g_lightColor[j].b);
+
+            // 감쇠 계수 (예시값)
+            glUniform1f(loc_lights[j].linear, 0.15f);
+            glUniform1f(loc_lights[j].quadratic, 0.0005f);
+        }
+        // ?? 이상한 것 같은데
+        draw_sphere_for_light(i);
+
+        glUseProgram(0);
+
+        // 스텐실/컬러마스크 등 원상 복귀
+        glStencilMask(0xFF);
+        // glEnable(GL_DEPTH_TEST); // 필요하다면 다시 켜기
     }
-
-    // (화면 전체 사각형) 그리기: VAO로
-    glBindVertexArray(quadVAO);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
-    glBindVertexArray(0);
-
-    glUseProgram(0);
 
     //--------------- SwapBuffers ---------------
     glutSwapBuffers();
@@ -647,6 +778,9 @@ void prepare_scene(void) {
     // 풀 스크린 사각형(라이팅 패스용) VAO 준비
     prepare_fullscreen_quad();
 
+    // 구도 준비해야 됨
+    prepare_sphere();
+
     // G-Buffer 생성 (초기 창 크기 가정)
     createGBuffer(800, 800);
 
@@ -668,7 +802,7 @@ int main(int argc, char* argv[]) {
     std::srand(static_cast<unsigned int>(std::time(nullptr)));
 
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL);
     glutInitWindowSize(800, 800);
     glutInitContextVersion(4, 5);
     glutInitContextProfile(GLUT_CORE_PROFILE);

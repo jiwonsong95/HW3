@@ -8,7 +8,6 @@ uniform sampler2D gPosition;
 uniform sampler2D gNormal;
 uniform sampler2D gAlbedo;
 
-// 광원 구조체 예시
 struct Light {
     vec3 Position;
     vec3 Color;
