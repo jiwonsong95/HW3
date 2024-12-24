@@ -31,12 +31,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Phong_Tx.frag">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="Shaders\Phong_Tx.vert">
-      <Filter>리소스 파일</Filter>
-    </None>
     <None Include="Shaders\DeferredLighting.frag">
       <Filter>리소스 파일</Filter>
     </None>
@@ -47,6 +41,18 @@
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="Shaders\DeferredGeometry.vert">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\null.vert">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\null.frag">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\Debug.frag">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="Shaders\Debug.vert">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>

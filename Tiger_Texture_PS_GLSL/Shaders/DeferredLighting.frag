@@ -8,7 +8,6 @@ uniform sampler2D gPosition;
 uniform sampler2D gNormal;
 uniform sampler2D gAlbedo;
 
-// 광원 구조체 예시
 struct Light {
     vec3 Position;
     vec3 Color;
@@ -40,40 +39,21 @@ void main()
         float dist = length(L);
         L = normalize(L);
 
-        // ?? 이미 스텐실 때문에 한 거 아니였어??
-        // --- 2) 광원 볼륨의 반경(radius) 계산 ---
         float Imax = max(lights[i].Color.r, max(lights[i].Color.g, lights[i].Color.b));
 
         float Kl = lights[i].Linear;
         float Kq = lights[i].Quadratic;
         
-        float radius = 0.0;
-        if (Kq > 0.0 && Imax > 0.0)
-        {
-            float a = Kq;
-            float b = Kl;
-            // c = K_c - I_max * (256 / 5)
-            float c = Kc - (Imax * (256.0 / 5.0));
+        float radius = 50.0;
 
-            // 판별식(discriminant)
-            float discriminant = b*b - 4.0*a*c;
-            if (discriminant > 0.0)
-            {
-                radius = (-b + sqrt(discriminant)) / (2.0*a);
-            }
-            else
-            {
-                radius = 999999.0;
-            }
-        }
-        else
+        // --- 2) 반경 안에 있을 때만 조명 계산 ---
+        float attenuation = 0.0;
+        if (dist < radius)
         {
-            radius = 999999.0;
+            attenuation = 1.0 / (Kc + Kl * dist + Kq * dist * dist);
         }
-        // --- 3) 반경 안에 있을 때만 조명 계산 ---
-        float attenuation = 1.0 / (Kc + Kl * dist + Kq * dist * dist);
 
-        // --- 4) 조명 계산 ---
+        // --- 3) 조명 계산 ---
         float diff = max(dot(Normal, L), 0.0);
         vec3 diffuse = diff * Albedo * lights[i].Color;
         

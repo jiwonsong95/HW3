@@ -15,7 +15,6 @@ void main()
     outPosition = vec4(FragPos, 1.0);
 
     outNormal   = vec4(normalize(Normal), 0.0);
-
     vec4 texColor = texture(u_base_texture, TexCoords);
     outAlbedo = texColor; 
 }
